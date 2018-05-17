@@ -82,16 +82,15 @@
 
 	<target name="pre-build" depends="clean, init, unpack"/>
 
-        <!-- The property "refactorer-path" is defined
-             in the file 'local.properties'
-        -->
-        <target name="auto-refactor" depends="unpack">
-            <exec executable="java">
-                  <arg value="-jar" />
-                  <arg value="${refactorer-path}" />
-                  <arg value="${bm-build-dir}" />
-            </exec>
-        </target>
+	<!-- The property "refactorer-path" is defined
+			in the file 'local.properties' -->
+	<target name="auto-refactor" depends="unpack">
+		<exec executable="java">
+				<arg value="-jar" />
+				<arg value="${refactorer-path}" />
+				<arg value="${bm-build-dir}" />
+		</exec>
+	</target>
 
 	<target name="clean">
 		<delete dir="${bm-output-dir}"/>
