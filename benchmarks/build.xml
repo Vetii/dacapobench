@@ -317,6 +317,7 @@ BUILDING:
  
     <target name="clean-benchmarks" depends="init">
         <clean.bm benchmark="avrora"/>
+        <clean.bm benchmark="avrora-collectionswitch"/>
         <clean.bm benchmark="batik"/>
         <clean.bm benchmark="h2"/>
         <clean.bm benchmark="eclipse"/>
@@ -391,6 +392,9 @@ See ${log.build.report} for a summary of benchmark build status.
 
     <target name="avrora" depends="init,harness">
         <build.bm benchmark="avrora"/>
+    </target>
+    <target name="avrora-collectionswitch" depends="init,harness">
+        <build.bm benchmark="avrora-collectionswitch"/>
     </target>
     <target name="batik" depends="init,harness">
         <build.bm benchmark="batik"/>
