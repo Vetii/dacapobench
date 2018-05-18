@@ -25,14 +25,14 @@
     <target name="bm-build" depends="auto-refactor">
         <property name="bm-tmp-dir" location="${bm-build-dir}/build" />
         <mkdir dir="${bm-tmp-dir}" />
-        <javac srcdir="${bm-build-dir}/${bm-name}/src" destdir="${bm-tmp-dir}" source="1.5" target="1.5" debug="true" debuglevel="lines,vars,source">
+        <javac srcdir="${bm-build-dir}/avrora/src" destdir="${bm-tmp-dir}" source="1.5" target="1.5" debug="true" debuglevel="lines,vars,source">
         <!-- 'collectionswitch-path' defined in 'local.properties' -->
             <classpath>
                 <pathelement path="${collectionswitch-path}" />
             </classpath>
         </javac>
         <copy todir="${bm-tmp-dir}/avrora/gui">
-            <fileset dir="${bm-build-dir}/${bm-name}/src/avrora/gui">
+            <fileset dir="${bm-build-dir}/avrora/src/avrora/gui">
                 <include name="images/*" />
             </fileset>
         </copy>
@@ -40,7 +40,7 @@
 
     <target name="data">
         <zip destfile="${bm-dat}/${bm-name}.zip">
-            <fileset dir="${bm-build-dir}/${bm-name}">
+            <fileset dir="${bm-build-dir}/avrora">
                 <include name="test/**/*" />
             </fileset>
         </zip>
