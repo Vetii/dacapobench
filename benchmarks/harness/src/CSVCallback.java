@@ -19,12 +19,22 @@ import java.io.*;
  */
 public class CSVCallback extends Callback {
 
+  private File database;
   private FileWriter outWriter;
 
   public CSVCallback(CommandLineArgs args) {
     super(args);
     try {
-      outWriter = new FileWriter("out.csv");
+      database = new File("out.csv");
+      if (database.exists()) {
+        // Load the database
+        // (No need to write the header)
+        outWriter = new FileWriter(database, true);
+      } else {
+        // Prepare to write to the database.
+        outWriter = new FileWriter(database, true);
+        outWriter.write(csvHeader());
+      }
     } catch (IOException e) {
       System.err.println(e.getMessage());
     }
@@ -34,11 +44,6 @@ public class CSVCallback extends Callback {
   @Override
   public void start(String benchmark) {
     System.err.println("my hook starting " + (isWarmup() ? "warmup " : "") + benchmark);
-    try {
-      outWriter.write(csvHeader());
-    } catch (IOException e) {
-      System.err.println(e.getMessage());
-    }
     super.start(benchmark);
   };
 
@@ -50,10 +55,8 @@ public class CSVCallback extends Callback {
     System.err.flush();
   };
 
-  public String csvHeader() {
-    return "benchmark,date,elapsed time" + System.lineSeparator();
-  }
 
+  /* Maybe after completion of data validation? */
   @Override
   public void complete(String benchmark, boolean valid) {
     super.complete(benchmark, valid);
@@ -61,18 +64,28 @@ public class CSVCallback extends Callback {
     System.err.flush();
     Date now = new Date();
     try {
-      outWriter.write(
-          benchmark + "," + now.toString() + "," + elapsed
-          );
+      outWriter.write(benchmarkDataRow(benchmark));
       outWriter.write(System.lineSeparator());
     } catch (IOException e) {
       System.err.println(e.getMessage());
     } finally {
-      try {
-        outWriter.close();
-      } catch (IOException e) {
-        System.err.println(e.getMessage());
+      // Non-warmup iteration is usually last
+      boolean lastRun = !isWarmup();
+      if (lastRun) {
+        try {
+          outWriter.close();
+        } catch (IOException e) {
+          System.err.println(e.getMessage());
+        }
       }
     }
+  };
+
+  public String csvHeader() {
+    return "benchmark,date,elapsed time" + System.lineSeparator();
+  };
+
+  public String benchmarkDataRow(String benchmark) {
+    return benchmark + "," + (new Date()).toString() + "," + elapsed;
   };
 }
