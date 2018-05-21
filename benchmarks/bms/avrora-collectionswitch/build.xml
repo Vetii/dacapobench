@@ -25,12 +25,10 @@
     <target name="bm-build" depends="auto-refactor">
         <property name="bm-tmp-dir" location="${bm-build-dir}/build" />
         <mkdir dir="${bm-tmp-dir}" />
-        <javac srcdir="${bm-build-dir}/avrora/src" destdir="${bm-tmp-dir}" source="1.5" target="1.5" debug="true" debuglevel="lines,vars,source">
         <!-- 'collectionswitch-path' defined in 'local.properties' -->
-            <classpath>
-                <pathelement path="${collectionswitch-path}" />
-            </classpath>
-        </javac>
+        <javac srcdir="${bm-build-dir}/avrora/src" destdir="${bm-tmp-dir}"
+               source="1.5" target="1.5" debug="true" debuglevel="lines,vars,source"
+               classpath="${collectionswitch-path}" />
         <copy todir="${bm-tmp-dir}/avrora/gui">
             <fileset dir="${bm-build-dir}/avrora/src/avrora/gui">
                 <include name="images/*" />
@@ -51,6 +49,7 @@
             <fileset dir="${bm-build-dir}/build">
                 <include name="**/*" />
             </fileset>
+            <zipfileset includes="**/*.class" src="/home/noricc/Dev/collectionSwitch/target/collections-online-adapter-0.0.1-SNAPSHOT-jar-with-dependencies.jar" />
         </jar>
     </target>
 
