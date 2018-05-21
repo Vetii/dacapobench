@@ -82,10 +82,10 @@ public class CSVCallback extends Callback {
   };
 
   public String csvHeader() {
-    return "benchmark,date,elapsed time" + System.lineSeparator();
+    return "benchmark,dataset size,date,elapsed time" + System.lineSeparator();
   };
 
   public String benchmarkDataRow(String benchmark) {
-    return benchmark + "," + (new Date()).toString() + "," + elapsed;
+    return benchmark + "," + args.getSize() + "," + (new Date()).toString() + "," + elapsed;
   };
 }
